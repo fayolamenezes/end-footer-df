@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Doctor Fizz • Footer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f1114;
+      --ink-1:#e7e7ea;
+      --ink-2:#a5a8b3;
+      --line:#2a2d31;
+      --accent:#f1f1f1;
+      --glow:#ff9900;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+      background:var(--bg);
+      color:var(--ink-1);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+
+    /* ===== Footer ===== */
+    #site-footer{
+      margin-top:80px;                 /* little spacer on top */
+    }
+    footer{
+      position:relative; overflow:hidden; isolation:isolate;
+      padding:56px 24px 0;             /* no bottom padding */
+      color:var(--ink-2);
+      padding-top: 800px;
+    }
+
+    /* dotted grid background (static) */
+    .grid-bg{
+      position:absolute; inset:0; z-index:-1; opacity:.45;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.25) 1px, transparent 1.5px) 0 0/24px 24px,
+        linear-gradient(var(--bg), var(--bg));
+      mask:linear-gradient(180deg, transparent 0, #000 10%, #000 90%, transparent 100%);
+    }
+
+    .footer-inner{max-width:1200px; margin:0 auto;}
+
+    .copyright{ text-align:center; color:var(--ink-1); font-weight:400; margin:0 0 16px; }
+
+    /* static divider (no animation) */
+    .divider{ height:1px; background:var(--line); width:100%; margin:0 0 22px; }
+
+    /* Row with centered nav and social on the right */
+    .row{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .spacer{ width:calc(36px*3 + 16px*2); } /* matches social width so nav is optically centered */
+    nav ul{ list-style:none; display:flex; gap:32px; padding:0; margin:0; }
+    nav a{ color:var(--ink-2); text-decoration:none; font-weight:400; letter-spacing:0.2px; }
+    nav a:hover{ color:var(--ink-1); }
+
+    .social{ display:flex; gap:16px; }
+    .social a{ display:grid; place-items:center; width:36px; height:36px; border-radius:8px; background:transparent; border:1px solid var(--line); color:var(--ink-2); transition: all .25s ease; }
+    .social a:hover{ color:#fff; border-color:#3a3f45; box-shadow:0 6px 18px rgba(0,0,0,.25); transform:translateY(-2px); }
+    .social svg{ width:18px; height:18px; }
+
+    .powered{ text-align:center; margin:28px 0 0; color:var(--ink-2);
+    padding-top: 80px; }
+    .powered strong{ color:var(--accent); font-weight:700; }
+
+    /* ===== Bottom wordmark reveal ===== */
+    .brand-wrap{ position:relative; margin-top:28px; padding-top:24px; padding-bottom:0; } /* no bottom padding */
+    .brand-wrap::before{              /* amber glow behind the wordmark (visual only) */
+      content:""; position:absolute; left:50%; transform:translateX(-50%);
+      bottom:0; width:min(1200px, 96vw); height:46vh; pointer-events:none;
+      background:radial-gradient(closest-side, color-mix(in oklab, var(--glow) 55%, transparent), transparent 60%);
+      filter:blur(22px); opacity:.9; z-index:-1;
+    }
+
+    .wordmark{
+      font-weight:800;
+      font-size:clamp(64px, 14vw, 220px);
+      letter-spacing:-0.02em;
+      line-height:0.9;
+      margin:0;                       /* no space below */
+      color:#fff;
+      text-align:center;
+    }
+
+    /* Split text pieces for animation */
+    .split .char{ display:inline-block; overflow:hidden; }
+    .split .char > span{ display:inline-block; transform:translateY(110%); }
+
+    @media (max-width:700px){
+      .row{ gap:12px; }
+      nav ul{ gap:20px; }
+      .spacer{ width:calc(36px*3 + 12px*2); }
+    }
+  </style>
+</head>
+<body>
+  <footer id="site-footer">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="footer-inner">
+      <p class="copyright">Dr. Fizz by Itzfizz Digital Private Limited 2025</p>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="spacer" aria-hidden="true"></div>
+        <nav aria-label="Footer Navigation">
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="social" aria-label="Social Links">
+          <a href="#" aria-label="YouTube" title="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.2 3.5 12 3.5 12 3.5s-7.2 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c2.2.6 9.4.6 9.4.6s7.2 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8ZM9.6 15.5v-7L16 12l-6.4 3.5Z"/></svg>
+          </a>
+          <a href="#" aria-label="X" title="X / Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.7 8.8L23.5 22H16l-5.3-6.9L4.6 22H1.5l8.3-9.5L.8 2h7.7l4.8 6.3L18.9 2Zm-1.2 18h2.1L6.4 4H4.2l13.5 16Z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8h4V23h-4V8Zm7.5 0h3.8v2.1h.1c.5-1 1.9-2.1 3.9-2.1 4.1 0 4.8 2.7 4.8 6.1V23h-4v-6.6c0-1.6 0-3.6-2.2-3.6s-2.5 1.7-2.5 3.5V23h-4V8Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <p class="powered">Powered by <strong>Garage University</strong></p>
+
+      <!-- Bottom brand reveal block (pinned & scrubbed at page end) -->
+      <div class="brand-wrap" id="brand">
+        <h1 id="logo" class="wordmark split" aria-label="Doctor Fizz">DOCTORFIZZ</h1>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP (only used for the DOCTORFIZZ reveal) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    if (window.ScrollTrigger) { gsap.registerPlugin(ScrollTrigger); }
+
+    // ===== Only animate the DOCTORFIZZ wordmark =====
+    function splitIntoChars(el){
+      const text = el.textContent;
+      const frag = document.createDocumentFragment();
+      for (const ch of text){
+        if (ch === ' '){ frag.appendChild(document.createTextNode(' ')); continue; }
+        const outer = document.createElement('span');
+        outer.className = 'char';
+        const inner = document.createElement('span');
+        inner.textContent = ch;
+        outer.appendChild(inner);
+        frag.appendChild(outer);
+      }
+      el.textContent = '';
+      el.appendChild(frag);
+    }
+
+    const logo = document.querySelector('#logo');
+    splitIntoChars(logo);
+    const chars = logo.querySelectorAll('.char > span');
+    gsap.set(chars, { skewY: 10, filter: 'blur(2px)' });
+
+    const bottomTL = gsap.timeline({
+      defaults: { ease: 'power3.out' },
+      scrollTrigger: {
+        trigger: '#site-footer',
+        start: 'bottom bottom',   // start when footer bottom hits viewport bottom
+        end: '+=600',             // scrub over ~320px
+        scrub: true,
+        pin: true,                // hold footer while revealing
+        pinSpacing: true,         // adds scroll distance (not visible while pinned)
+        anticipatePin: 1
+      }
+    });
+
+    bottomTL.to(chars, {
+      y: 0,
+      skewY: 0,
+      filter: 'blur(0px)',
+      stagger: { amount: 0.9, from: 0 }
+    }, 0);
+  </script>
+</body>
+</html>

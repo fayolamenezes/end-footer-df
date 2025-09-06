@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bottom Reveal • DOCTORFIZZ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0e0f12;        /* page background */
+      --ink:#e7e7ea;       /* main text */
+      --muted:#a5a8b3;     /* supporting text */
+      --line:#2a2d33;      /* 1px divider */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; background:var(--bg); color:var(--ink); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+
+    /* Dummy content so we can scroll to the bottom */
+    .content{min-height:160vh; display:grid; place-items:center; color:var(--muted);}
+    .content h2{font-weight:700; letter-spacing:.3px}
+
+    /* Bottom block */
+    .bottom{padding:64px 20px 96px; max-width:1200px; margin:0 auto;}
+    .divider{height:1px; width:100%; background:var(--line); margin:0 0 32px; transform-origin:center; transform:scaleX(0);}
+
+    /* Big wordmark */
+    .wordmark{
+      font-weight:800;
+      font-size:clamp(48px, 14vw, 220px);
+      letter-spacing:-0.02em;
+      line-height:0.9;
+      margin:0;
+      color:var(--ink);
+      opacity:0.9;
+    }
+
+    /* Split text pieces */
+    .split .char{ display:inline-block; overflow:hidden; }
+    .split .char > span{ display:inline-block; transform:translateY(110%); }
+
+    @media (max-width:600px){
+      .bottom{ padding-bottom:72px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="content">
+    <h2>Scroll down to the bottom ↓</h2>
+  </main>
+
+  <!-- Bottom section -->
+  <section id="bottom" class="bottom">
+    <div class="divider" aria-hidden="true"></div>
+    <h1 id="logo" class="wordmark split" aria-label="DOCTORFIZZ">DOCTORFIZZ</h1>
+  </section>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    if (window.ScrollTrigger) { gsap.registerPlugin(ScrollTrigger); }
+
+    // Split text into characters
+    function splitIntoChars(el){
+      const text = el.textContent;
+      const frag = document.createDocumentFragment();
+      for (const ch of text){
+        if (ch === ' '){ frag.appendChild(document.createTextNode(' ')); continue; }
+        const outer = document.createElement('span');
+        outer.className = 'char';
+        const inner = document.createElement('span');
+        inner.textContent = ch;
+        outer.appendChild(inner);
+        frag.appendChild(outer);
+      }
+      el.textContent = '';
+      el.appendChild(frag);
+    }
+
+    const logo = document.querySelector('#logo');
+    const divider = document.querySelector('.divider');
+    splitIntoChars(logo);
+
+    const chars = logo.querySelectorAll('.char > span');
+    gsap.set(chars, { skewY: 10, filter: 'blur(2px)' });
+
+    // Create a scroll-controlled zone AT the bottom.
+    // Pinning extends the page by the 'end' distance so you can scrub the reveal there.
+    const tl = gsap.timeline({
+      defaults: { ease: 'power3.out' },
+      scrollTrigger: {
+        trigger: '#bottom',
+        start: 'bottom bottom',     // when section bottom hits viewport bottom
+        end: '+=320',               // scrub over ~320px of extra scroll
+        scrub: true,
+        pin: true,                  // hold the section while we scrub
+        pinSpacing: true,
+        anticipatePin: 1
+        // ,markers:true  // <- uncomment for debugging
+      }
+    });
+
+    // 1) Divider expands first
+    tl.to(divider, { scaleX: 1, duration: 0.2 }, 0);
+
+    // 2) Letters reveal one-by-one under scroll
+    tl.to(chars, {
+      y: 0,
+      skewY: 0,
+      filter: 'blur(0px)',
+      stagger: { amount: 0.9, from: 0 }  // spread entire word across the scrub range
+    }, 0.1);
+
+    // Want a longer/shorter reveal? tweak end ('+=400' slower, '+=220' faster)
+    // Want letters to feel more independent? increase stagger.amount
+  </script>
+</body>
+</html>
